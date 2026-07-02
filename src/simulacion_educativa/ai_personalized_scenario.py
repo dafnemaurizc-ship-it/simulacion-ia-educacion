@@ -14,6 +14,7 @@ from simulacion_educativa.config import (
 from simulacion_educativa.entities import StudentState
 from simulacion_educativa.metrics import calculate_kpis, students_to_dataframe
 from simulacion_educativa.ml.predictor import RiskPredictor
+from simulacion_educativa.visualization import SalabimLiveView, build_environment
 
 sim.yieldless(False)
 
@@ -248,14 +249,30 @@ class AIPersonalizedScenario:
         self.predictor = predictor or RiskPredictor()
 
     def run(self) -> dict:
+        return self.run_with_animation(animate=False)
+
+    def run_with_animation(self, *, animate: bool, speed: float = 1.0) -> dict:
         random.seed(self.sim_config.random_seed)
         np.random.seed(self.sim_config.random_seed)
 
-        env = sim.Environment(trace=False)
+        env = build_environment(
+            animate=animate,
+            title="Educación personalizada con IA",
+            speed=speed,
+        )
 
         if not self.students:
             raise ValueError(
                 "No se recibió una cohorte. Usa CohortFactory para generar estudiantes."
+            )
+
+        if animate:
+            SalabimLiveView(
+                env=env,
+                students=self.students,
+                scenario_name="Educación personalizada con IA",
+                semester_weeks=self.sim_config.semester_weeks,
+                show_ml_metrics=True,
             )
 
         for student_state in self.students:
@@ -264,6 +281,7 @@ class AIPersonalizedScenario:
                 sim_config=self.sim_config,
                 scenario_config=self.scenario_config,
                 predictor=self.predictor,
+                env=env,
             )
 
         env.run(till=self.sim_config.semester_weeks + 1)

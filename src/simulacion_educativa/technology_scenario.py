@@ -15,6 +15,7 @@ from simulacion_educativa.config import (
 )
 from simulacion_educativa.entities import AccessLevel, StudentState
 from simulacion_educativa.metrics import calculate_kpis, students_to_dataframe
+from simulacion_educativa.visualization import SalabimLiveView, build_environment
 
 
 class TechnologyStudent(sim.Component):
@@ -212,14 +213,29 @@ class TechnologyScenario:
         self.students: list[StudentState] = cohort or []
 
     def run(self) -> dict:
+        return self.run_with_animation(animate=False)
+
+    def run_with_animation(self, *, animate: bool, speed: float = 1.0) -> dict:
         random.seed(self.sim_config.random_seed)
         np.random.seed(self.sim_config.random_seed)
 
-        env = sim.Environment(trace=False)
+        env = build_environment(
+            animate=animate,
+            title="Uso de tecnología educativa",
+            speed=speed,
+        )
 
         if not self.students:
             raise ValueError(
                 "No se recibió una cohorte. Usa CohortFactory para generar estudiantes."
+            )
+
+        if animate:
+            SalabimLiveView(
+                env=env,
+                students=self.students,
+                scenario_name="Uso de tecnología educativa",
+                semester_weeks=self.sim_config.semester_weeks,
             )
 
         for student_state in self.students:
@@ -227,6 +243,7 @@ class TechnologyScenario:
                 state=student_state,
                 sim_config=self.sim_config,
                 scenario_config=self.scenario_config,
+                env=env,
             )
 
         env.run(till=self.sim_config.semester_weeks + 1)

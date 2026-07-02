@@ -70,6 +70,24 @@ class StudentState:
     def normalized_motivation(self) -> float:
         return min(max(self.motivation, 0.0), 1.0)
 
+    def visual_risk_level(self) -> str:
+        if self.desertion_risk < 0.33:
+            return "bajo"
+
+        if self.desertion_risk < 0.66:
+            return "medio"
+
+        return "alto"
+
+    def visual_status(self) -> str:
+        if self.deserted:
+            return "deserted"
+
+        if self.approved:
+            return "approved"
+
+        return "active"
+
     def to_ml_features(self) -> dict:
         """
         Convierte el estudiante simulado al formato esperado por el modelo ML.
