@@ -1,0 +1,25 @@
+[project]
+name = "simulacion-ia-educacion"
+version = "0.1.0"
+description = "Simulación educativa con IA usando salabim"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "greenlet>=3.5.1",
+    "joblib>=1.5.3",
+    "matplotlib>=3.10.0",
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "salabim>=24.0.0",
+    "scikit-learn>=1.7.2",
+]
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
