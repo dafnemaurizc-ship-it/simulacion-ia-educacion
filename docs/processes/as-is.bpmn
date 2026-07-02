@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_AsIs"
+                  targetNamespace="http://simulacion-ia-educacion/bpmn">
+  <bpmn:collaboration id="Collaboration_AsIs">
+    <bpmn:participant id="Participant_AsIs" name="Simulación educativa" processRef="Process_AsIs" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_AsIs" name="Proceso AS-IS de simulación educativa" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_AsIs">
+      <bpmn:lane id="Lane_User_AsIs" name="Usuario">
+        <bpmn:flowNodeRef>StartEvent_AsIs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RunScript_AsIs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ReviewResults_AsIs</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_System_AsIs" name="Sistema">
+        <bpmn:flowNodeRef>Task_CreateCohort_AsIs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_RunScenarios_AsIs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ExportResults_AsIs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_PrintComparison_AsIs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_AsIs</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="StartEvent_AsIs" name="Necesidad de analizar escenarios" />
+    <bpmn:userTask id="Task_RunScript_AsIs" name="Ejecutar simulador en lote" />
+    <bpmn:serviceTask id="Task_CreateCohort_AsIs" name="Crear cohorte base" />
+    <bpmn:serviceTask id="Task_RunScenarios_AsIs" name="Ejecutar escenarios" />
+    <bpmn:serviceTask id="Task_ExportResults_AsIs" name="Exportar resultados" />
+    <bpmn:serviceTask id="Task_PrintComparison_AsIs" name="Consolidar comparación" />
+    <bpmn:userTask id="Task_ReviewResults_AsIs" name="Revisar KPIs y CSV" />
+    <bpmn:endEvent id="EndEvent_AsIs" name="Resultados disponibles" />
+
+    <bpmn:sequenceFlow id="Flow_AsIs_01" sourceRef="StartEvent_AsIs" targetRef="Task_RunScript_AsIs" />
+    <bpmn:sequenceFlow id="Flow_AsIs_02" sourceRef="Task_RunScript_AsIs" targetRef="Task_CreateCohort_AsIs" />
+    <bpmn:sequenceFlow id="Flow_AsIs_03" sourceRef="Task_CreateCohort_AsIs" targetRef="Task_RunScenarios_AsIs" />
+    <bpmn:sequenceFlow id="Flow_AsIs_04" sourceRef="Task_RunScenarios_AsIs" targetRef="Task_ExportResults_AsIs" />
+    <bpmn:sequenceFlow id="Flow_AsIs_05" sourceRef="Task_ExportResults_AsIs" targetRef="Task_PrintComparison_AsIs" />
+    <bpmn:sequenceFlow id="Flow_AsIs_06" sourceRef="Task_PrintComparison_AsIs" targetRef="Task_ReviewResults_AsIs" />
+    <bpmn:sequenceFlow id="Flow_AsIs_07" sourceRef="Task_ReviewResults_AsIs" targetRef="EndEvent_AsIs" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_AsIs">
+    <bpmndi:BPMNPlane id="BPMNPlane_AsIs" bpmnElement="Collaboration_AsIs">
+      <bpmndi:BPMNShape id="Participant_AsIs_di" bpmnElement="Participant_AsIs" isHorizontal="true">
+        <dc:Bounds x="20" y="20" width="1220" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_User_AsIs_di" bpmnElement="Lane_User_AsIs" isHorizontal="true">
+        <dc:Bounds x="20" y="20" width="1220" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_System_AsIs_di" bpmnElement="Lane_System_AsIs" isHorizontal="true">
+        <dc:Bounds x="20" y="120" width="1220" height="100" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="StartEvent_AsIs_di" bpmnElement="StartEvent_AsIs">
+        <dc:Bounds x="60" y="51" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RunScript_AsIs_di" bpmnElement="Task_RunScript_AsIs">
+        <dc:Bounds x="130" y="36" width="120" height="66" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CreateCohort_AsIs_di" bpmnElement="Task_CreateCohort_AsIs">
+        <dc:Bounds x="290" y="136" width="120" height="66" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_RunScenarios_AsIs_di" bpmnElement="Task_RunScenarios_AsIs">
+        <dc:Bounds x="450" y="136" width="120" height="66" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ExportResults_AsIs_di" bpmnElement="Task_ExportResults_AsIs">
+        <dc:Bounds x="610" y="136" width="120" height="66" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_PrintComparison_AsIs_di" bpmnElement="Task_PrintComparison_AsIs">
+        <dc:Bounds x="770" y="136" width="140" height="66" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ReviewResults_AsIs_di" bpmnElement="Task_ReviewResults_AsIs">
+        <dc:Bounds x="950" y="36" width="120" height="66" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_AsIs_di" bpmnElement="EndEvent_AsIs">
+        <dc:Bounds x="1115" y="51" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_AsIs_01_di" bpmnElement="Flow_AsIs_01">
+        <di:waypoint x="96" y="69" />
+        <di:waypoint x="130" y="69" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AsIs_02_di" bpmnElement="Flow_AsIs_02">
+        <di:waypoint x="250" y="69" />
+        <di:waypoint x="290" y="169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AsIs_03_di" bpmnElement="Flow_AsIs_03">
+        <di:waypoint x="410" y="169" />
+        <di:waypoint x="450" y="169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AsIs_04_di" bpmnElement="Flow_AsIs_04">
+        <di:waypoint x="570" y="169" />
+        <di:waypoint x="610" y="169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AsIs_05_di" bpmnElement="Flow_AsIs_05">
+        <di:waypoint x="730" y="169" />
+        <di:waypoint x="770" y="169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AsIs_06_di" bpmnElement="Flow_AsIs_06">
+        <di:waypoint x="910" y="169" />
+        <di:waypoint x="950" y="69" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AsIs_07_di" bpmnElement="Flow_AsIs_07">
+        <di:waypoint x="1070" y="69" />
+        <di:waypoint x="1115" y="69" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
