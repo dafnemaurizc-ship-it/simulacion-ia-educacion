@@ -1,0 +1,721 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_ASIS_TOBE_Educacion_IA_Revisado" targetNamespace="http://chatgpt.openai.com/bpmn/simulacion-educacion-ia-revisado" exporter="ChatGPT" exporterVersion="1.0">
+  <bpmn:collaboration id="Collaboration_ASIS_TOBE_Revisado">
+    <bpmn:participant id="Participant_ASIS" name="AS IS - Educación tradicional" processRef="Process_ASIS"/>
+    <bpmn:participant id="Participant_TOBE" name="TO BE - Educación personalizada con IA" processRef="Process_TOBE"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_ASIS" name="AS IS - Flujo tradicional de enseñanza y seguimiento académico" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Process_ASIS">
+      <bpmn:lane id="Lane_ASIS_Estudiante" name="Estudiante">
+        <bpmn:flowNodeRef>Start_ASIS</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_Asistir</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_ASIS_Docente" name="Docente">
+        <bpmn:flowNodeRef>Task_ASIS_Planificar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_Dictar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_Evaluar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_RegistrarNota</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ASIS_Nota</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_BajoRendimiento</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ASIS_RiesgoTiempo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_RetroManual</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_Recuperacion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ASIS_Recupera</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_ASIS_Abandona</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_ASIS_Coordinacion" name="Coordinación académica">
+        <bpmn:flowNodeRef>Task_ASIS_Aprobado</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_Desaprobado</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_Desercion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ASIS_Consolidar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_ASIS</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_ASIS" name="Inicio del ciclo académico">
+      <bpmn:outgoing>Flow_ASIS_01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_ASIS_Planificar" name="Planificar clase tradicional">
+      <bpmn:incoming>Flow_ASIS_01</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_02</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_Dictar" name="Impartir clase general">
+      <bpmn:incoming>Flow_ASIS_02</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_03</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_Asistir" name="Asistir y estudiar con recursos estándar">
+      <bpmn:incoming>Flow_ASIS_03</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_04</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_Evaluar" name="Aplicar evaluación estandarizada">
+      <bpmn:incoming>Flow_ASIS_04</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_05</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_RegistrarNota" name="Registrar calificación">
+      <bpmn:incoming>Flow_ASIS_05</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_06</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_ASIS_Nota" name="¿Nota &gt;= 11?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_ASIS_06</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_07</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ASIS_08</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_ASIS_Aprobado" name="Registrar aprobado">
+      <bpmn:incoming>Flow_ASIS_07</bpmn:incoming>
+      <bpmn:incoming>Flow_ASIS_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_18</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_BajoRendimiento" name="Identificar bajo rendimiento">
+      <bpmn:incoming>Flow_ASIS_08</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_09</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_ASIS_RiesgoTiempo" name="¿Riesgo detectado a tiempo?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_ASIS_09</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_10</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ASIS_15</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_ASIS_RetroManual" name="Brindar retroalimentación manual">
+      <bpmn:incoming>Flow_ASIS_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_Recuperacion" name="Aplicar recuperación general">
+      <bpmn:incoming>Flow_ASIS_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_12</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_ASIS_Recupera" name="¿Recupera nota?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_ASIS_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_13</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ASIS_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_ASIS_Abandona" name="¿Abandona el curso?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_ASIS_14</bpmn:incoming>
+      <bpmn:incoming>Flow_ASIS_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_16</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ASIS_17</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_ASIS_Desaprobado" name="Registrar desaprobado">
+      <bpmn:incoming>Flow_ASIS_17</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_19</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_Desercion" name="Registrar deserción">
+      <bpmn:incoming>Flow_ASIS_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_20</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_ASIS_Consolidar" name="Consolidar rendimiento, aprobación y deserción">
+      <bpmn:incoming>Flow_ASIS_18</bpmn:incoming>
+      <bpmn:incoming>Flow_ASIS_19</bpmn:incoming>
+      <bpmn:incoming>Flow_ASIS_20</bpmn:incoming>
+      <bpmn:outgoing>Flow_ASIS_21</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_ASIS" name="Reporte tradicional generado">
+      <bpmn:incoming>Flow_ASIS_21</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_ASIS_01" sourceRef="Start_ASIS" targetRef="Task_ASIS_Planificar"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_02" sourceRef="Task_ASIS_Planificar" targetRef="Task_ASIS_Dictar"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_03" sourceRef="Task_ASIS_Dictar" targetRef="Task_ASIS_Asistir"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_04" sourceRef="Task_ASIS_Asistir" targetRef="Task_ASIS_Evaluar"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_05" sourceRef="Task_ASIS_Evaluar" targetRef="Task_ASIS_RegistrarNota"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_06" sourceRef="Task_ASIS_RegistrarNota" targetRef="Gateway_ASIS_Nota"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_07" sourceRef="Gateway_ASIS_Nota" targetRef="Task_ASIS_Aprobado" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_08" sourceRef="Gateway_ASIS_Nota" targetRef="Task_ASIS_BajoRendimiento" name="No"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_09" sourceRef="Task_ASIS_BajoRendimiento" targetRef="Gateway_ASIS_RiesgoTiempo"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_10" sourceRef="Gateway_ASIS_RiesgoTiempo" targetRef="Task_ASIS_RetroManual" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_11" sourceRef="Task_ASIS_RetroManual" targetRef="Task_ASIS_Recuperacion"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_12" sourceRef="Task_ASIS_Recuperacion" targetRef="Gateway_ASIS_Recupera"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_13" sourceRef="Gateway_ASIS_Recupera" targetRef="Task_ASIS_Aprobado" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_14" sourceRef="Gateway_ASIS_Recupera" targetRef="Gateway_ASIS_Abandona" name="No"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_15" sourceRef="Gateway_ASIS_RiesgoTiempo" targetRef="Gateway_ASIS_Abandona" name="No"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_16" sourceRef="Gateway_ASIS_Abandona" targetRef="Task_ASIS_Desercion" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_17" sourceRef="Gateway_ASIS_Abandona" targetRef="Task_ASIS_Desaprobado" name="No"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_18" sourceRef="Task_ASIS_Aprobado" targetRef="Task_ASIS_Consolidar"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_19" sourceRef="Task_ASIS_Desaprobado" targetRef="Task_ASIS_Consolidar"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_20" sourceRef="Task_ASIS_Desercion" targetRef="Task_ASIS_Consolidar"/>
+    <bpmn:sequenceFlow id="Flow_ASIS_21" sourceRef="Task_ASIS_Consolidar" targetRef="End_ASIS"/>
+  </bpmn:process>
+  <bpmn:process id="Process_TOBE" name="TO BE - Flujo con sistema de educación personalizada con IA" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Process_TOBE">
+      <bpmn:lane id="Lane_TOBE_Estudiante" name="Estudiante">
+        <bpmn:flowNodeRef>Start_TOBE</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_Diagnostico</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_ResolverActividades</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_RecibirRecursos</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_TOBE_Docente" name="Docente">
+        <bpmn:flowNodeRef>Task_TOBE_DefinirCurso</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_DesarrollarSesion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_RevisarSugerencia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_TOBE_ValidaAjuste</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_AjustarIntervencion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_AplicarIntervencion</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_TOBE_IA" name="Sistema de educación personalizada con IA">
+        <bpmn:flowNodeRef>Task_TOBE_CapturarVariables</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_PerfilAprendizaje</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_Monitorear</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_TOBE_Progreso</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_ActividadAvance</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_DetectarDificultad</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_Alerta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_Refuerzo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_TOBE_UnirIntervencion</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_ActualizarPerfil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_TOBE_FinPeriodo</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_TOBE_Simulacion" name="Motor de simulación y analítica">
+        <bpmn:flowNodeRef>Task_TOBE_SimTradicional</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_SimIA</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_CompararIndicadores</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_TOBE_Coordinacion" name="Coordinación académica">
+        <bpmn:flowNodeRef>Task_TOBE_ReporteImpacto</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_TOBE_Mejora</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_Implementar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_TOBE_RevisarParametros</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_TOBE</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_TOBE" name="Inicio del ciclo con IA personalizada">
+      <bpmn:outgoing>Flow_TOBE_01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="Task_TOBE_DefinirCurso" name="Definir objetivos, contenidos y criterios">
+      <bpmn:incoming>Flow_TOBE_01</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_02</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_TOBE_Diagnostico" name="Realizar diagnóstico académico inicial">
+      <bpmn:incoming>Flow_TOBE_02</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_03</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_TOBE_CapturarVariables" name="Capturar variables académicas iniciales">
+      <bpmn:incoming>Flow_TOBE_03</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_04</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_TOBE_PerfilAprendizaje" name="Construir perfil de aprendizaje">
+      <bpmn:incoming>Flow_TOBE_04</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_05</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_TOBE_DesarrollarSesion" name="Desarrollar sesión de aprendizaje">
+      <bpmn:incoming>Flow_TOBE_05</bpmn:incoming>
+      <bpmn:incoming>Flow_TOBE_23</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_06</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_TOBE_ResolverActividades" name="Resolver actividades y evaluaciones formativas">
+      <bpmn:incoming>Flow_TOBE_06</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_07</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_TOBE_Monitorear" name="Monitorear progreso y participación">
+      <bpmn:incoming>Flow_TOBE_07</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_08</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_TOBE_Progreso" name="¿Progreso adecuado?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_TOBE_08</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_09</bpmn:outgoing>
+      <bpmn:outgoing>Flow_TOBE_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_TOBE_ActividadAvance" name="Proponer actividad de avance">
+      <bpmn:incoming>Flow_TOBE_09</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_TOBE_DetectarDificultad" name="Detectar dificultad y riesgo académico">
+      <bpmn:incoming>Flow_TOBE_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_TOBE_Alerta" name="Generar alerta temprana">
+      <bpmn:incoming>Flow_TOBE_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_TOBE_Refuerzo" name="Proponer refuerzo personalizado">
+      <bpmn:incoming>Flow_TOBE_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_TOBE_UnirIntervencion" name="Unir rutas" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_TOBE_13</bpmn:incoming>
+      <bpmn:incoming>Flow_TOBE_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_15</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_TOBE_RevisarSugerencia" name="Revisar sugerencia pedagógica de IA">
+      <bpmn:incoming>Flow_TOBE_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_16</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_TOBE_ValidaAjuste" name="¿Ajuste validado?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_TOBE_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_17</bpmn:outgoing>
+      <bpmn:outgoing>Flow_TOBE_18</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_TOBE_AjustarIntervencion" name="Ajustar intervención docente">
+      <bpmn:incoming>Flow_TOBE_18</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_19</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_TOBE_AplicarIntervencion" name="Aplicar intervención personalizada">
+      <bpmn:incoming>Flow_TOBE_17</bpmn:incoming>
+      <bpmn:incoming>Flow_TOBE_19</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_20</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_TOBE_RecibirRecursos" name="Recibir recursos y retroalimentación adaptada">
+      <bpmn:incoming>Flow_TOBE_20</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_21</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Task_TOBE_ActualizarPerfil" name="Actualizar perfil y registrar avance">
+      <bpmn:incoming>Flow_TOBE_21</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_22</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_TOBE_FinPeriodo" name="¿Finalizó el periodo?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_TOBE_22</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_23</bpmn:outgoing>
+      <bpmn:outgoing>Flow_TOBE_24</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Task_TOBE_SimTradicional" name="Simular flujo tradicional AS IS">
+      <bpmn:incoming>Flow_TOBE_24</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_25</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_TOBE_SimIA" name="Simular flujo con IA personalizada">
+      <bpmn:incoming>Flow_TOBE_25</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_26</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_TOBE_CompararIndicadores" name="Comparar indicadores: rendimiento, aprobación y deserción">
+      <bpmn:incoming>Flow_TOBE_26</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_27</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="Task_TOBE_ReporteImpacto" name="Generar reporte de impacto académico">
+      <bpmn:incoming>Flow_TOBE_27</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_28</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_TOBE_Mejora" name="¿IA mejora indicadores?" gatewayDirection="Diverging">
+      <bpmn:incoming>Flow_TOBE_28</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_29</bpmn:outgoing>
+      <bpmn:outgoing>Flow_TOBE_30</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Task_TOBE_Implementar" name="Planificar implementación institucional">
+      <bpmn:incoming>Flow_TOBE_29</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_31</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_TOBE_RevisarParametros" name="Revisar parámetros y estrategia pedagógica">
+      <bpmn:incoming>Flow_TOBE_30</bpmn:incoming>
+      <bpmn:outgoing>Flow_TOBE_32</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="End_TOBE" name="Decisión académica basada en simulación">
+      <bpmn:incoming>Flow_TOBE_31</bpmn:incoming>
+      <bpmn:incoming>Flow_TOBE_32</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_TOBE_01" sourceRef="Start_TOBE" targetRef="Task_TOBE_DefinirCurso"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_02" sourceRef="Task_TOBE_DefinirCurso" targetRef="Task_TOBE_Diagnostico"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_03" sourceRef="Task_TOBE_Diagnostico" targetRef="Task_TOBE_CapturarVariables"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_04" sourceRef="Task_TOBE_CapturarVariables" targetRef="Task_TOBE_PerfilAprendizaje"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_05" sourceRef="Task_TOBE_PerfilAprendizaje" targetRef="Task_TOBE_DesarrollarSesion"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_06" sourceRef="Task_TOBE_DesarrollarSesion" targetRef="Task_TOBE_ResolverActividades"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_07" sourceRef="Task_TOBE_ResolverActividades" targetRef="Task_TOBE_Monitorear"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_08" sourceRef="Task_TOBE_Monitorear" targetRef="Gateway_TOBE_Progreso"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_09" sourceRef="Gateway_TOBE_Progreso" targetRef="Task_TOBE_ActividadAvance" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_10" sourceRef="Gateway_TOBE_Progreso" targetRef="Task_TOBE_DetectarDificultad" name="No"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_11" sourceRef="Task_TOBE_DetectarDificultad" targetRef="Task_TOBE_Alerta"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_12" sourceRef="Task_TOBE_Alerta" targetRef="Task_TOBE_Refuerzo"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_13" sourceRef="Task_TOBE_ActividadAvance" targetRef="Gateway_TOBE_UnirIntervencion"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_14" sourceRef="Task_TOBE_Refuerzo" targetRef="Gateway_TOBE_UnirIntervencion"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_15" sourceRef="Gateway_TOBE_UnirIntervencion" targetRef="Task_TOBE_RevisarSugerencia"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_16" sourceRef="Task_TOBE_RevisarSugerencia" targetRef="Gateway_TOBE_ValidaAjuste"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_17" sourceRef="Gateway_TOBE_ValidaAjuste" targetRef="Task_TOBE_AplicarIntervencion" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_18" sourceRef="Gateway_TOBE_ValidaAjuste" targetRef="Task_TOBE_AjustarIntervencion" name="No"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_19" sourceRef="Task_TOBE_AjustarIntervencion" targetRef="Task_TOBE_AplicarIntervencion"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_20" sourceRef="Task_TOBE_AplicarIntervencion" targetRef="Task_TOBE_RecibirRecursos"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_21" sourceRef="Task_TOBE_RecibirRecursos" targetRef="Task_TOBE_ActualizarPerfil"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_22" sourceRef="Task_TOBE_ActualizarPerfil" targetRef="Gateway_TOBE_FinPeriodo"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_23" sourceRef="Gateway_TOBE_FinPeriodo" targetRef="Task_TOBE_DesarrollarSesion" name="No"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_24" sourceRef="Gateway_TOBE_FinPeriodo" targetRef="Task_TOBE_SimTradicional" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_25" sourceRef="Task_TOBE_SimTradicional" targetRef="Task_TOBE_SimIA"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_26" sourceRef="Task_TOBE_SimIA" targetRef="Task_TOBE_CompararIndicadores"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_27" sourceRef="Task_TOBE_CompararIndicadores" targetRef="Task_TOBE_ReporteImpacto"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_28" sourceRef="Task_TOBE_ReporteImpacto" targetRef="Gateway_TOBE_Mejora"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_29" sourceRef="Gateway_TOBE_Mejora" targetRef="Task_TOBE_Implementar" name="Sí"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_30" sourceRef="Gateway_TOBE_Mejora" targetRef="Task_TOBE_RevisarParametros" name="No"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_31" sourceRef="Task_TOBE_Implementar" targetRef="End_TOBE"/>
+    <bpmn:sequenceFlow id="Flow_TOBE_32" sourceRef="Task_TOBE_RevisarParametros" targetRef="End_TOBE"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_ASIS_TOBE_Revisado">
+    <bpmndi:BPMNPlane id="BPMNPlane_ASIS_TOBE_Revisado" bpmnElement="Collaboration_ASIS_TOBE_Revisado">
+      <bpmndi:BPMNShape id="Participant_ASIS_di" bpmnElement="Participant_ASIS" isHorizontal="true">
+        <dc:Bounds x="60" y="50" width="3650" height="560"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_TOBE_di" bpmnElement="Participant_TOBE" isHorizontal="true">
+        <dc:Bounds x="60" y="650" width="7300" height="1000"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ASIS_Estudiante_di" bpmnElement="Lane_ASIS_Estudiante" isHorizontal="true">
+        <dc:Bounds x="90" y="50" width="3620" height="170"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ASIS_Docente_di" bpmnElement="Lane_ASIS_Docente" isHorizontal="true">
+        <dc:Bounds x="90" y="220" width="3620" height="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_ASIS_Coordinacion_di" bpmnElement="Lane_ASIS_Coordinacion" isHorizontal="true">
+        <dc:Bounds x="90" y="400" width="3620" height="210"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_TOBE_Estudiante_di" bpmnElement="Lane_TOBE_Estudiante" isHorizontal="true">
+        <dc:Bounds x="90" y="650" width="7270" height="160"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_TOBE_Docente_di" bpmnElement="Lane_TOBE_Docente" isHorizontal="true">
+        <dc:Bounds x="90" y="810" width="7270" height="190"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_TOBE_IA_di" bpmnElement="Lane_TOBE_IA" isHorizontal="true">
+        <dc:Bounds x="90" y="1000" width="7270" height="210"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_TOBE_Simulacion_di" bpmnElement="Lane_TOBE_Simulacion" isHorizontal="true">
+        <dc:Bounds x="90" y="1210" width="7270" height="180"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_TOBE_Coordinacion_di" bpmnElement="Lane_TOBE_Coordinacion" isHorizontal="true">
+        <dc:Bounds x="90" y="1390" width="7270" height="260"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_ASIS_di" bpmnElement="Start_ASIS">
+        <dc:Bounds x="120" y="110" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Planificar_di" bpmnElement="Task_ASIS_Planificar">
+        <dc:Bounds x="230" y="260" width="160" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Dictar_di" bpmnElement="Task_ASIS_Dictar">
+        <dc:Bounds x="450" y="260" width="150" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Asistir_di" bpmnElement="Task_ASIS_Asistir">
+        <dc:Bounds x="660" y="98" width="210" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Evaluar_di" bpmnElement="Task_ASIS_Evaluar">
+        <dc:Bounds x="930" y="260" width="190" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_RegistrarNota_di" bpmnElement="Task_ASIS_RegistrarNota">
+        <dc:Bounds x="1180" y="260" width="160" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ASIS_Nota_di" bpmnElement="Gateway_ASIS_Nota">
+        <dc:Bounds x="1400" y="265" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Aprobado_di" bpmnElement="Task_ASIS_Aprobado">
+        <dc:Bounds x="1580" y="430" width="150" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_BajoRendimiento_di" bpmnElement="Task_ASIS_BajoRendimiento">
+        <dc:Bounds x="1580" y="260" width="180" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ASIS_RiesgoTiempo_di" bpmnElement="Gateway_ASIS_RiesgoTiempo">
+        <dc:Bounds x="1820" y="265" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_RetroManual_di" bpmnElement="Task_ASIS_RetroManual">
+        <dc:Bounds x="2020" y="260" width="200" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Recuperacion_di" bpmnElement="Task_ASIS_Recuperacion">
+        <dc:Bounds x="2280" y="260" width="180" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ASIS_Recupera_di" bpmnElement="Gateway_ASIS_Recupera">
+        <dc:Bounds x="2510" y="265" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ASIS_Abandona_di" bpmnElement="Gateway_ASIS_Abandona">
+        <dc:Bounds x="2720" y="265" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Desaprobado_di" bpmnElement="Task_ASIS_Desaprobado">
+        <dc:Bounds x="2930" y="430" width="170" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Desercion_di" bpmnElement="Task_ASIS_Desercion">
+        <dc:Bounds x="2930" y="500" width="160" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_ASIS_Consolidar_di" bpmnElement="Task_ASIS_Consolidar">
+        <dc:Bounds x="3190" y="445" width="250" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_ASIS_di" bpmnElement="End_ASIS">
+        <dc:Bounds x="3520" y="457" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_TOBE_di" bpmnElement="Start_TOBE">
+        <dc:Bounds x="120" y="715" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_DefinirCurso_di" bpmnElement="Task_TOBE_DefinirCurso">
+        <dc:Bounds x="230" y="860" width="220" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_Diagnostico_di" bpmnElement="Task_TOBE_Diagnostico">
+        <dc:Bounds x="520" y="700" width="220" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_CapturarVariables_di" bpmnElement="Task_TOBE_CapturarVariables">
+        <dc:Bounds x="810" y="1040" width="230" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_PerfilAprendizaje_di" bpmnElement="Task_TOBE_PerfilAprendizaje">
+        <dc:Bounds x="1110" y="1040" width="200" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_DesarrollarSesion_di" bpmnElement="Task_TOBE_DesarrollarSesion">
+        <dc:Bounds x="1380" y="860" width="210" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_ResolverActividades_di" bpmnElement="Task_TOBE_ResolverActividades">
+        <dc:Bounds x="1660" y="700" width="250" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_Monitorear_di" bpmnElement="Task_TOBE_Monitorear">
+        <dc:Bounds x="1980" y="1040" width="220" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_TOBE_Progreso_di" bpmnElement="Gateway_TOBE_Progreso">
+        <dc:Bounds x="2270" y="1045" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_ActividadAvance_di" bpmnElement="Task_TOBE_ActividadAvance">
+        <dc:Bounds x="2450" y="980" width="200" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_DetectarDificultad_di" bpmnElement="Task_TOBE_DetectarDificultad">
+        <dc:Bounds x="2450" y="1105" width="230" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_Alerta_di" bpmnElement="Task_TOBE_Alerta">
+        <dc:Bounds x="2750" y="1105" width="180" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_Refuerzo_di" bpmnElement="Task_TOBE_Refuerzo">
+        <dc:Bounds x="3000" y="1105" width="210" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_TOBE_UnirIntervencion_di" bpmnElement="Gateway_TOBE_UnirIntervencion">
+        <dc:Bounds x="3300" y="1045" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_RevisarSugerencia_di" bpmnElement="Task_TOBE_RevisarSugerencia">
+        <dc:Bounds x="3450" y="860" width="230" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_TOBE_ValidaAjuste_di" bpmnElement="Gateway_TOBE_ValidaAjuste">
+        <dc:Bounds x="3740" y="865" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_AjustarIntervencion_di" bpmnElement="Task_TOBE_AjustarIntervencion">
+        <dc:Bounds x="3920" y="925" width="200" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_AplicarIntervencion_di" bpmnElement="Task_TOBE_AplicarIntervencion">
+        <dc:Bounds x="4210" y="860" width="220" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_RecibirRecursos_di" bpmnElement="Task_TOBE_RecibirRecursos">
+        <dc:Bounds x="4510" y="700" width="260" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_ActualizarPerfil_di" bpmnElement="Task_TOBE_ActualizarPerfil">
+        <dc:Bounds x="4860" y="1040" width="220" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_TOBE_FinPeriodo_di" bpmnElement="Gateway_TOBE_FinPeriodo">
+        <dc:Bounds x="5160" y="1045" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_SimTradicional_di" bpmnElement="Task_TOBE_SimTradicional">
+        <dc:Bounds x="5360" y="1245" width="200" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_SimIA_di" bpmnElement="Task_TOBE_SimIA">
+        <dc:Bounds x="5630" y="1245" width="220" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_CompararIndicadores_di" bpmnElement="Task_TOBE_CompararIndicadores">
+        <dc:Bounds x="5940" y="1245" width="290" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_ReporteImpacto_di" bpmnElement="Task_TOBE_ReporteImpacto">
+        <dc:Bounds x="6310" y="1445" width="240" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_TOBE_Mejora_di" bpmnElement="Gateway_TOBE_Mejora">
+        <dc:Bounds x="6630" y="1450" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_Implementar_di" bpmnElement="Task_TOBE_Implementar">
+        <dc:Bounds x="6820" y="1410" width="240" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_TOBE_RevisarParametros_di" bpmnElement="Task_TOBE_RevisarParametros">
+        <dc:Bounds x="6820" y="1510" width="260" height="60"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_TOBE_di" bpmnElement="End_TOBE">
+        <dc:Bounds x="7170" y="1460" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_ASIS_01_di" bpmnElement="Flow_ASIS_01">
+        <di:waypoint x="156" y="128.0"/>
+        <di:waypoint x="230" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_02_di" bpmnElement="Flow_ASIS_02">
+        <di:waypoint x="390" y="290.0"/>
+        <di:waypoint x="450" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_03_di" bpmnElement="Flow_ASIS_03">
+        <di:waypoint x="600" y="290.0"/>
+        <di:waypoint x="660" y="128.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_04_di" bpmnElement="Flow_ASIS_04">
+        <di:waypoint x="870" y="128.0"/>
+        <di:waypoint x="930" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_05_di" bpmnElement="Flow_ASIS_05">
+        <di:waypoint x="1120" y="290.0"/>
+        <di:waypoint x="1180" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_06_di" bpmnElement="Flow_ASIS_06">
+        <di:waypoint x="1340" y="290.0"/>
+        <di:waypoint x="1400" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_07_di" bpmnElement="Flow_ASIS_07">
+        <di:waypoint x="1450" y="290.0"/>
+        <di:waypoint x="1580" y="455.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_08_di" bpmnElement="Flow_ASIS_08">
+        <di:waypoint x="1450" y="290.0"/>
+        <di:waypoint x="1580" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_09_di" bpmnElement="Flow_ASIS_09">
+        <di:waypoint x="1760" y="290.0"/>
+        <di:waypoint x="1820" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_10_di" bpmnElement="Flow_ASIS_10">
+        <di:waypoint x="1870" y="290.0"/>
+        <di:waypoint x="2020" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_11_di" bpmnElement="Flow_ASIS_11">
+        <di:waypoint x="2220" y="290.0"/>
+        <di:waypoint x="2280" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_12_di" bpmnElement="Flow_ASIS_12">
+        <di:waypoint x="2460" y="290.0"/>
+        <di:waypoint x="2510" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_13_di" bpmnElement="Flow_ASIS_13">
+        <di:waypoint x="2560" y="290.0"/>
+        <di:waypoint x="1580" y="455.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_14_di" bpmnElement="Flow_ASIS_14">
+        <di:waypoint x="2560" y="290.0"/>
+        <di:waypoint x="2720" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_15_di" bpmnElement="Flow_ASIS_15">
+        <di:waypoint x="1870" y="290.0"/>
+        <di:waypoint x="2720" y="290.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_16_di" bpmnElement="Flow_ASIS_16">
+        <di:waypoint x="2770" y="290.0"/>
+        <di:waypoint x="2930" y="525.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_17_di" bpmnElement="Flow_ASIS_17">
+        <di:waypoint x="2770" y="290.0"/>
+        <di:waypoint x="2930" y="455.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_18_di" bpmnElement="Flow_ASIS_18">
+        <di:waypoint x="1730" y="455.0"/>
+        <di:waypoint x="3190" y="475.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_19_di" bpmnElement="Flow_ASIS_19">
+        <di:waypoint x="3100" y="455.0"/>
+        <di:waypoint x="3190" y="475.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_20_di" bpmnElement="Flow_ASIS_20">
+        <di:waypoint x="3090" y="525.0"/>
+        <di:waypoint x="3190" y="475.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ASIS_21_di" bpmnElement="Flow_ASIS_21">
+        <di:waypoint x="3440" y="475.0"/>
+        <di:waypoint x="3520" y="475.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_01_di" bpmnElement="Flow_TOBE_01">
+        <di:waypoint x="156" y="733.0"/>
+        <di:waypoint x="230" y="890.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_02_di" bpmnElement="Flow_TOBE_02">
+        <di:waypoint x="450" y="890.0"/>
+        <di:waypoint x="520" y="730.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_03_di" bpmnElement="Flow_TOBE_03">
+        <di:waypoint x="740" y="730.0"/>
+        <di:waypoint x="810" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_04_di" bpmnElement="Flow_TOBE_04">
+        <di:waypoint x="1040" y="1070.0"/>
+        <di:waypoint x="1110" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_05_di" bpmnElement="Flow_TOBE_05">
+        <di:waypoint x="1310" y="1070.0"/>
+        <di:waypoint x="1380" y="890.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_06_di" bpmnElement="Flow_TOBE_06">
+        <di:waypoint x="1590" y="890.0"/>
+        <di:waypoint x="1660" y="730.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_07_di" bpmnElement="Flow_TOBE_07">
+        <di:waypoint x="1910" y="730.0"/>
+        <di:waypoint x="1980" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_08_di" bpmnElement="Flow_TOBE_08">
+        <di:waypoint x="2200" y="1070.0"/>
+        <di:waypoint x="2270" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_09_di" bpmnElement="Flow_TOBE_09">
+        <di:waypoint x="2320" y="1070.0"/>
+        <di:waypoint x="2450" y="1010.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_10_di" bpmnElement="Flow_TOBE_10">
+        <di:waypoint x="2320" y="1070.0"/>
+        <di:waypoint x="2450" y="1135.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_11_di" bpmnElement="Flow_TOBE_11">
+        <di:waypoint x="2680" y="1135.0"/>
+        <di:waypoint x="2750" y="1135.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_12_di" bpmnElement="Flow_TOBE_12">
+        <di:waypoint x="2930" y="1135.0"/>
+        <di:waypoint x="3000" y="1135.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_13_di" bpmnElement="Flow_TOBE_13">
+        <di:waypoint x="2650" y="1010.0"/>
+        <di:waypoint x="3300" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_14_di" bpmnElement="Flow_TOBE_14">
+        <di:waypoint x="3210" y="1135.0"/>
+        <di:waypoint x="3300" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_15_di" bpmnElement="Flow_TOBE_15">
+        <di:waypoint x="3350" y="1070.0"/>
+        <di:waypoint x="3450" y="890.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_16_di" bpmnElement="Flow_TOBE_16">
+        <di:waypoint x="3680" y="890.0"/>
+        <di:waypoint x="3740" y="890.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_17_di" bpmnElement="Flow_TOBE_17">
+        <di:waypoint x="3790" y="890.0"/>
+        <di:waypoint x="4210" y="890.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_18_di" bpmnElement="Flow_TOBE_18">
+        <di:waypoint x="3790" y="890.0"/>
+        <di:waypoint x="3920" y="955.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_19_di" bpmnElement="Flow_TOBE_19">
+        <di:waypoint x="4120" y="955.0"/>
+        <di:waypoint x="4210" y="890.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_20_di" bpmnElement="Flow_TOBE_20">
+        <di:waypoint x="4430" y="890.0"/>
+        <di:waypoint x="4510" y="730.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_21_di" bpmnElement="Flow_TOBE_21">
+        <di:waypoint x="4770" y="730.0"/>
+        <di:waypoint x="4860" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_22_di" bpmnElement="Flow_TOBE_22">
+        <di:waypoint x="5080" y="1070.0"/>
+        <di:waypoint x="5160" y="1070.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_23_di" bpmnElement="Flow_TOBE_23">
+        <di:waypoint x="5210" y="1070"/>
+        <di:waypoint x="5210" y="1160"/>
+        <di:waypoint x="1350" y="1160"/>
+        <di:waypoint x="1350" y="890"/>
+        <di:waypoint x="1380" y="890"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_24_di" bpmnElement="Flow_TOBE_24">
+        <di:waypoint x="5210" y="1070.0"/>
+        <di:waypoint x="5360" y="1275.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_25_di" bpmnElement="Flow_TOBE_25">
+        <di:waypoint x="5560" y="1275.0"/>
+        <di:waypoint x="5630" y="1275.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_26_di" bpmnElement="Flow_TOBE_26">
+        <di:waypoint x="5850" y="1275.0"/>
+        <di:waypoint x="5940" y="1275.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_27_di" bpmnElement="Flow_TOBE_27">
+        <di:waypoint x="6230" y="1275.0"/>
+        <di:waypoint x="6310" y="1475.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_28_di" bpmnElement="Flow_TOBE_28">
+        <di:waypoint x="6550" y="1475.0"/>
+        <di:waypoint x="6630" y="1475.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_29_di" bpmnElement="Flow_TOBE_29">
+        <di:waypoint x="6680" y="1475.0"/>
+        <di:waypoint x="6820" y="1440.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_30_di" bpmnElement="Flow_TOBE_30">
+        <di:waypoint x="6680" y="1475.0"/>
+        <di:waypoint x="6820" y="1540.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_31_di" bpmnElement="Flow_TOBE_31">
+        <di:waypoint x="7060" y="1440.0"/>
+        <di:waypoint x="7170" y="1478.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_TOBE_32_di" bpmnElement="Flow_TOBE_32">
+        <di:waypoint x="7080" y="1540.0"/>
+        <di:waypoint x="7170" y="1478.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
